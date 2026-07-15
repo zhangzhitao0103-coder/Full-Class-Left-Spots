@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>满班名额图片生成工具</title>
+  <script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture identify alias people.set people.set_once set_config register register_once unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled onFeatureFlags reloadFeatureFlags getFeatureFlag getFeatureFlagPayload group".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init("phc_x4f8nnybtCVSXC2iS8EUicQgVYvDcZFfDaVfc8ZqRzrP", {
+      api_host: "https://us.i.posthog.com",
+      capture_pageview: true,
+      autocapture: true,
+      person_profiles: "identified_only"
+    });
+  </script>
+  <style>
+    :root {
+      --bg: #f6efe8;
+      --panel: #fffdf8;
+      --ink: #2b1b16;
+      --muted: #806d62;
+      --line: #ead7c0;
+      --accent: #b91c1c;
+      --shadow: 0 18px 50px rgba(86, 34, 20, .16);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(135deg, #f8f2e9 0%, #f6e3d1 45%, #efe7f3 100%);
+    }
+    .app {
+      display: grid;
+      grid-template-columns: minmax(720px, 1.35fr) minmax(420px, 1fr);
+      gap: 16px;
+      min-height: 100vh;
+      padding: 18px;
+    }
+    .panel {
+      background: rgba(255, 253, 248, .94);
+      border: 1px solid rgba(210, 173, 129, .55);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      overflow: auto;
+    }
+    h1 { margin: 0 0 14px; font-size: 22px; line-height: 1.25; }
+    .field { margin-bottom: 14px; }
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #5f2b21;
+      font-size: 13px;
+      font-weight: 800;
+    }
+    input, select, textarea {
+      width: 100%;
+      min-height: 40px;
+      padding: 10px 11px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      outline: none;
+    }
+    textarea { resize: vertical; line-height: 1.45; }
+    input:focus, select:focus, textarea:focus {
+      border-color: #d69b36;
+      box-shadow: 0 0 0 3px rgba(214, 155, 54, .18);
+    }
+    .teacher-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .slot {
+      min-width: 0;
+      padding: 9px;
+      border: 1px solid #edd8bc;
+      border-radius: 8px;
+      background: #fffaf1;
+    }
+    .slot-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: #8a1e16;
+      font-size: 14px;
+      font-weight: 900;
+    }
+    .slot-head span:last-child {
+      color: #9b773d;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 70px;
+      gap: 8px;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      bottom: -18px;
+      margin: 16px -18px -18px;
+      padding: 14px 18px;
+      border-top: 1px solid var(--line);
+      background: rgba(255, 253, 248, .96);
+    }
+    button {
+      min-height: 42px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #d92c20, #9d1414);
+      color: #fff;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    button:disabled { opacity: .6; cursor: wait; }
+    .status { color: var(--muted); font-size: 13px; line-height: 1.35; }
+    .stage {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      height: calc(100vh - 36px);
+    }
+    .preview-frame {
+      width: min(100%, calc((100vh - 36px) * 941 / 1672));
+      min-width: 320px;
+      aspect-ratio: 941 / 1672;
+      box-shadow: 0 26px 70px rgba(86, 18, 10, .32);
+      background: #8a0806;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; padding: 14px; }
+      .teacher-grid { grid-template-columns: 1fr; }
+      .stage { height: auto; }
+      .preview-frame { width: min(100%, 420px); min-width: 0; }
+      .actions { bottom: -14px; }
+    }
+    @media (min-width: 901px) and (max-width: 1180px) {
+      .app { grid-template-columns: minmax(520px, 1.25fr) minmax(340px, 1fr); }
+      .teacher-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .preview-frame { min-width: 280px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="panel">
+      <h1>满班名额图片生成工具</h1>
+      <div class="field">
+        <label for="title">标题</label>
+        <textarea id="title" rows="2"></textarea>
+      </div>
+      <div class="field">
+        <label for="note">注意文本</label>
+        <textarea id="note" rows="2"></textarea>
+      </div>
+      <div class="teacher-grid" id="slots"></div>
+      <div class="actions">
+        <button id="exportImage" type="button">导出图片</button>
+        <div class="status" id="status">读取老师数据中...</div>
+      </div>
+    </section>
+    <section class="stage">
+      <div class="preview-frame">
+        <canvas id="canvas" width="941" height="1672"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const subjectOrder = ["语文", "数学", "英语", "物理", "化学", "生物", "历史", "地理", "政治"];
+    const textPos = [
+      [204, 585, 620, 676], [470, 585, 620, 676], [736, 585, 620, 676],
+      [200, 960, 990, 1043], [469, 960, 990, 1043], [739, 960, 990, 1043],
+      [200, 1340, 1370, 1420], [469, 1340, 1370, 1420], [739, 1340, 1370, 1420],
+    ];
+    const avatarBoxes = [
+      [138, 426, 132], [404, 426, 132], [670, 426, 132],
+      [134, 803, 132], [403, 803, 132], [673, 803, 132],
+      [134, 1183, 132], [403, 1183, 132], [673, 1183, 132],
+    ];
+    const state = {
+      teachers: [],
+      slots: [],
+      images: new Map(),
+      bg: null,
+    };
+    const el = id => document.getElementById(id);
+    const canvas = el("canvas");
+    const ctx = canvas.getContext("2d");
+
+    function trackEvent(eventName, properties = {}) {
+      if (!window.posthog || typeof window.posthog.capture !== "function") return;
+
+      window.posthog.capture(eventName, {
+        project_name: "各科满班率",
+        module_name: "Full-Class-Left-Spots",
+        page_title: document.title,
+        page_path: window.location.pathname,
+        ...properties,
+      });
+    }
+
+    function loadImage(src) {
+      if (state.images.has(src)) return state.images.get(src);
+      const promise = new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = reject;
+        img.src = src;
+      });
+      state.images.set(src, promise);
+      return promise;
+    }
+
+    function teachersFor(subject) {
+      return state.teachers.filter(t => t.subject === subject);
+    }
+
+    function teacherById(id) {
+      return state.teachers.find(t => t.id === id);
+    }
+
+    function fitText(text, maxWidth, baseSize, minSize, font, weight = "900") {
+      let size = baseSize;
+      do {
+        ctx.font = `${weight} ${size}px ${font}`;
+        if (ctx.measureText(text).width <= maxWidth || size <= minSize) return size;
+        size -= 1;
+      } while (size > minSize);
+      return minSize;
+    }
+
+    function drawCentered(text, x, y, maxWidth, baseSize, color, font, weight = "900") {
+      const size = fitText(text, maxWidth, baseSize, Math.max(10, Math.floor(baseSize * .72)), font, weight);
+      ctx.font = `${weight} ${size}px ${font}`;
+      ctx.fillStyle = color;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(text, x, y);
+    }
+
+    async function render() {
+      if (!state.bg) return;
+      ctx.clearRect(0, 0, 941, 1672);
+      ctx.drawImage(state.bg, 0, 0, 941, 1672);
+
+      const titleLines = el("title").value.split(/\n/).filter(Boolean).slice(0, 2);
+      const titleFont = '"华文行楷","STXingkai","KaiTi",serif';
+      drawCentered(titleLines[0] || "", 470, 140, 760, 104, "#ffd51f", titleFont, "900");
+      drawCentered(titleLines[1] || "", 470, 250, 680, 104, "#ffd51f", titleFont, "900");
+
+      for (let i = 0; i < state.slots.length; i++) {
+        const slot = state.slots[i];
+        const teacher = teacherById(slot.teacherId);
+        if (!teacher) continue;
+        const avatar = await loadImage(teacher.avatar);
+        const [ax, ay, ah] = avatarBoxes[i];
+        const aw = ah * avatar.naturalWidth / avatar.naturalHeight;
+        ctx.drawImage(avatar, ax + (132 - aw) / 2, ay, aw, ah);
+
+        const [x, nameY, introY, quotaY] = textPos[i];
+        drawCentered(`${teacher.name}/${teacher.subject}`, x, nameY, 190, 30, "#e71910", '"Microsoft YaHei",Arial,sans-serif', "900");
+        drawCentered(teacher.intro, x, introY, 180, 19, "#e33b12", '"Microsoft YaHei",Arial,sans-serif', "800");
+        drawCentered(`剩余${slot.quota || "0"}个名额`, x, quotaY, 190, 31, "#ff1b0b", titleFont, "900");
+      }
+
+      ctx.font = '800 24px "Microsoft YaHei",Arial,sans-serif';
+      ctx.fillStyle = "#ffeb18";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      const note = el("note").value;
+      const noteSize = fitText(note, 780, 24, 16, '"Microsoft YaHei",Arial,sans-serif', "800");
+      ctx.font = `800 ${noteSize}px "Microsoft YaHei",Arial,sans-serif`;
+      ctx.fillText(note, 470, 1588);
+    }
+
+    function buildSlots(data) {
+      state.teachers = data.teachers;
+      const subjects = subjectOrder.filter(s => data.subjects.includes(s));
+      state.slots = subjects.map(subject => {
+        const first = teachersFor(subject)[0];
+        return { subject, teacherId: first ? first.id : "", quota: "17" };
+      });
+      el("title").value = data.defaultTitle;
+      el("note").value = data.defaultNote;
+      const root = el("slots");
+      root.innerHTML = "";
+      state.slots.forEach((slot, index) => {
+        const box = document.createElement("div");
+        box.className = "slot";
+        box.innerHTML = `
+          <div class="slot-head"><span>老师${index + 1} · ${slot.subject}</span><span>名额余量</span></div>
+          <div class="row">
+            <select data-index="${index}" data-role="teacher">
+              ${teachersFor(slot.subject).map(t => `<option value="${t.id}">${t.name}｜${t.intro}</option>`).join("")}
+            </select>
+            <input data-index="${index}" data-role="quota" inputmode="numeric" pattern="[0-9]*" value="${slot.quota}">
+          </div>
+        `;
+        root.appendChild(box);
+      });
+      root.addEventListener("input", onSlotChange);
+      root.addEventListener("change", onSlotChange);
+      el("title").addEventListener("input", render);
+      el("note").addEventListener("input", render);
+      ["title", "note"].forEach(id => {
+        el(id).addEventListener("change", () => {
+          trackEvent("filter_changed", {
+            filter_name: id,
+            filter_value: el(id).value,
+            source: "poster_text_field",
+          });
+        });
+      });
+      el("status").textContent = "已载入老师数据，可导出图片。";
+      render();
+    }
+
+    function onSlotChange(event) {
+      const target = event.target;
+      const index = Number(target.dataset.index);
+      if (!Number.isFinite(index)) return;
+      if (target.dataset.role === "teacher") state.slots[index].teacherId = target.value;
+      if (target.dataset.role === "quota") {
+        state.slots[index].quota = target.value.replace(/\D/g, "").slice(0, 3);
+        target.value = state.slots[index].quota;
+      }
+      trackEvent("filter_changed", {
+        filter_name: target.dataset.role,
+        filter_value: target.value,
+        item_name: state.slots[index]?.subject,
+        item_type: "teacher_slot",
+        source: "teacher_slot_form",
+      });
+      render();
+    }
+
+    function exportImage() {
+      trackEvent("button_clicked", {
+        button_name: "导出图片",
+        source: "export_image_button",
+      });
+      canvas.toBlob(blob => {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `满班名额生成_${new Date().toISOString().slice(0, 19).replace(/[-:T]/g, "")}.png`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+        el("status").textContent = "图片已开始下载。";
+        trackEvent("download_clicked", {
+          button_name: "导出图片",
+          item_name: "满班名额图片",
+          item_type: "poster",
+          source: "export_image_button",
+        });
+      }, "image/png");
+    }
+
+    el("exportImage").addEventListener("click", exportImage);
+
+    Promise.all([
+      fetch("assets/teachers.json").then(r => r.json()),
+      loadImage("assets/template-bg.png"),
+    ]).then(([data, bg]) => {
+      state.bg = bg;
+      buildSlots(data);
+      trackEvent("tool_page_viewed", {
+        source: "page_init",
+        result_count: state.slots.length,
+      });
+    }).catch(err => {
+      el("status").textContent = err.message;
+    });
+  </script>
+</body>
+</html>

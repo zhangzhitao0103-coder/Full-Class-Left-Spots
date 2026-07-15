@@ -1,0 +1,213 @@
+{
+  "subjects": [
+    "语文",
+    "数学",
+    "英语",
+    "化学",
+    "物理",
+    "生物",
+    "历史",
+    "地理",
+    "政治"
+  ],
+  "teachers": [
+    {
+      "id": "t2",
+      "subject": "语文",
+      "name": "刘英杰",
+      "intro": "清华大学出版社签约作者",
+      "avatar": "assets/avatars/t2.png"
+    },
+    {
+      "id": "t6",
+      "subject": "语文",
+      "name": "姜博杨",
+      "intro": "海归硕士",
+      "avatar": "assets/avatars/t6.png"
+    },
+    {
+      "id": "t10",
+      "subject": "语文",
+      "name": "于越",
+      "intro": "十年高考教学&阅卷经验",
+      "avatar": "assets/avatars/t10.png"
+    },
+    {
+      "id": "t15",
+      "subject": "数学",
+      "name": "王冬亮",
+      "intro": "清华本硕连读",
+      "avatar": "assets/avatars/t15.png"
+    },
+    {
+      "id": "t22",
+      "subject": "数学",
+      "name": "胡源",
+      "intro": "北大元培毕业",
+      "avatar": "assets/avatars/t22.png"
+    },
+    {
+      "id": "t25",
+      "subject": "数学",
+      "name": "高昕",
+      "intro": "北大元培毕业",
+      "avatar": "assets/avatars/t25.png"
+    },
+    {
+      "id": "t28",
+      "subject": "数学",
+      "name": "白瑞芳",
+      "intro": "人大跳级学霸",
+      "avatar": "assets/avatars/t28.png"
+    },
+    {
+      "id": "t33",
+      "subject": "英语",
+      "name": "王震",
+      "intro": "牛津大学交流学习",
+      "avatar": "assets/avatars/t33.png"
+    },
+    {
+      "id": "t36",
+      "subject": "英语",
+      "name": "贾岚",
+      "intro": "人大英语语言文学硕士",
+      "avatar": "assets/avatars/t36.png"
+    },
+    {
+      "id": "t39",
+      "subject": "英语",
+      "name": "漆纯伊",
+      "intro": "海归名校硕士",
+      "avatar": "assets/avatars/t39.png"
+    },
+    {
+      "id": "t42",
+      "subject": "英语",
+      "name": "杨文哲",
+      "intro": "CCTV专访英语名师",
+      "avatar": "assets/avatars/t42.png"
+    },
+    {
+      "id": "t46",
+      "subject": "英语",
+      "name": "李辉",
+      "intro": "20年英语教学经验",
+      "avatar": "assets/avatars/t46.png"
+    },
+    {
+      "id": "t49",
+      "subject": "化学",
+      "name": "高东辉",
+      "intro": "二十一年教学经验",
+      "avatar": "assets/avatars/t49.png"
+    },
+    {
+      "id": "t53",
+      "subject": "化学",
+      "name": "冷士强",
+      "intro": "北京大学毕业",
+      "avatar": "assets/avatars/t53.png"
+    },
+    {
+      "id": "t56",
+      "subject": "化学",
+      "name": "钟啸",
+      "intro": "浙江大学毕业",
+      "avatar": "assets/avatars/t56.png"
+    },
+    {
+      "id": "t61",
+      "subject": "化学",
+      "name": "贺涵",
+      "intro": "八年教学经验",
+      "avatar": "assets/avatars/t61.png"
+    },
+    {
+      "id": "t64",
+      "subject": "物理",
+      "name": "李楠",
+      "intro": "清华大学本硕",
+      "avatar": "assets/avatars/t64.png"
+    },
+    {
+      "id": "t67",
+      "subject": "物理",
+      "name": "刘杰",
+      "intro": "清华大学毕业",
+      "avatar": "assets/avatars/t67.png"
+    },
+    {
+      "id": "t70",
+      "subject": "物理",
+      "name": "莫荒年",
+      "intro": "北京大学毕业",
+      "avatar": "assets/avatars/t70.png"
+    },
+    {
+      "id": "t74",
+      "subject": "物理",
+      "name": "宁志远",
+      "intro": "北大物理电子学博士",
+      "avatar": "assets/avatars/t74.png"
+    },
+    {
+      "id": "t80",
+      "subject": "生物",
+      "name": "陈旭晨",
+      "intro": "十二年教学经验",
+      "avatar": "assets/avatars/t80.png"
+    },
+    {
+      "id": "t84",
+      "subject": "生物",
+      "name": "万猛",
+      "intro": "十七年教学经验",
+      "avatar": "assets/avatars/t84.png"
+    },
+    {
+      "id": "t87",
+      "subject": "历史",
+      "name": "张志浩",
+      "intro": "十四年教学经验",
+      "avatar": "assets/avatars/t87.png"
+    },
+    {
+      "id": "t92",
+      "subject": "历史",
+      "name": "李珊玥",
+      "intro": "十一年教学经验",
+      "avatar": "assets/avatars/t92.png"
+    },
+    {
+      "id": "t98",
+      "subject": "地理",
+      "name": "李荟乐",
+      "intro": "十二届高三毕业班经验",
+      "avatar": "assets/avatars/t98.png"
+    },
+    {
+      "id": "t103",
+      "subject": "地理",
+      "name": "杨翌",
+      "intro": "北京师范大学教育硕士",
+      "avatar": "assets/avatars/t103.png"
+    },
+    {
+      "id": "t106",
+      "subject": "地理",
+      "name": "钱叶茂",
+      "intro": "十年教龄衡水中学名师",
+      "avatar": "assets/avatars/t106.png"
+    },
+    {
+      "id": "t111",
+      "subject": "政治",
+      "name": "张博文",
+      "intro": "十年线上授课经验",
+      "avatar": "assets/avatars/t111.png"
+    }
+  ],
+  "defaultTitle": "新高三英才班\n剩余名额",
+  "defaultNote": "注：据不完全统计，具体名额与学业诊断师沟通为准"
+}
