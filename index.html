@@ -374,6 +374,7 @@
           item_type: "poster",
           source: "export_image_button",
         });
+        fetch("/api/export-count", { method: "POST" }).catch(() => {});
       }, "image/png");
     }
 
