@@ -12,25 +12,11 @@
   ],
   "teachers": [
     {
-      "id": "t2",
-      "subject": "语文",
-      "name": "刘英杰",
-      "intro": "清华大学出版社签约作者",
-      "avatar": "assets/avatars/t2.png"
-    },
-    {
       "id": "t6",
       "subject": "语文",
       "name": "姜博杨",
       "intro": "海归硕士",
       "avatar": "assets/avatars/t6.png"
-    },
-    {
-      "id": "t10",
-      "subject": "语文",
-      "name": "于越",
-      "intro": "十年高考教学&阅卷经验",
-      "avatar": "assets/avatars/t10.png"
     },
     {
       "id": "t15",

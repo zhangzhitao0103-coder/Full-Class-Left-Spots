@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 EXCEL_PATH = ROOT / "teacher-team.xlsx"
 ASSET_DIR = ROOT / "assets"
 AVATAR_DIR = ASSET_DIR / "avatars"
+HIDDEN_TEACHERS = {"刘英杰", "于越"}
 
 
 def image_bytes_by_row(sheet) -> dict[int, bytes]:
@@ -36,6 +37,8 @@ def teacher_rows(sheet) -> list[dict[str, object]]:
         if subject:
             current_subject = str(subject).strip()
         if not name:
+            continue
+        if str(name).strip() in HIDDEN_TEACHERS:
             continue
         if not current_subject:
             raise RuntimeError(f"Row {row} has a teacher name but no subject context.")

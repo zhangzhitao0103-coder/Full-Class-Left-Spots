@@ -1,0 +1,7 @@
+name = "full-class-left-spots"
+compatibility_date = "2026-10-16"
+pages_build_output_dir = "./dist"
+
+[[kv_namespaces]]
+binding = "EXPORT_COUNTS"
+id = "41042ebf8e3a46ecae4115c7257b3da3"
